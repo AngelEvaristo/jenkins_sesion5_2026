@@ -11,7 +11,7 @@ pipeline {
                     hello('dotnet')
 
                     def tag = stringtools.tag(env.BRANCHE_NAME,env.BUILD_NUMBER)
-                    echo "Tag del build es {tag}"
+                    echo "Tag del build es ${tag}"
                 }
             }
         }
