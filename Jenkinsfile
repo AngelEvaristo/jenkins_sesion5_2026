@@ -2,45 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone from github'){
+        stage('load template'){
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'AngelEvaristo', url: 'https://github.com/AngelEvaristo/jenkins_sesion5_2026.git']])                
+                script {
+                    dir('pipeline-remote'){
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/main']],
+                            userRemoteConfigs: [[
+                                url: 'https://github.com/AngelEvaristo/librerias_jenkins_2026',
+                                credentialsId: 'AngelEvaristo'
+                            ]]
+                        ])                        
+                    }
+
+                    def remote = load 'pipeline-remote/pipelines/buildytest.groovy'
+                    remote.call('Proyecto dotnet',false)
+                }                
             }            
         }
-        stage ('Validacion de make'){
-            steps {
-                bat 'make --version'
-            }
-        }
-
-        stage ('Restore con make'){
-            steps {
-                bat 'make restore'
-            }
-            
-        }
-
-        stage ('Build con make'){
-            steps {
-                bat 'make build'
-            }
-            
-        }
-
-        stage ('test con make'){
-            steps {
-                bat 'make test'
-            }            
-        }
-
-        stage ('Publish'){
-            steps {
-                bat 'make publish'
-                archiveArtifacts artifacts: 'published/**'
-            }
-        }
-
-    }
 
     post {
         always {
