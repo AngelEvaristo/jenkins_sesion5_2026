@@ -9,13 +9,18 @@ pipeline {
         }
         stage ('Restore'){
             steps {
-                bat 'dotnet restore'
+                powershell 'scripts/restore.ps1'
             }
         }
         stage ('Build'){
             steps {
-                bat 'dotnet build'
+                powershell 'scripts/build.ps1'
             }
         }
+        stage ('Test'){
+            steps {
+                powershell 'scripts/test.ps1'
+            }
+        }        
     }
 }
