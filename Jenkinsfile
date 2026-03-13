@@ -7,20 +7,23 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'AngelEvaristo', url: 'https://github.com/AngelEvaristo/jenkins_sesion5_2026.git']])                
             }            
         }
-        stage ('Restore'){
+        stage ('Validacion de make'){
             steps {
-                powershell 'scripts/restore.ps1'
+                bat 'make --version'
             }
         }
-        stage ('Build'){
-            steps {
-                powershell 'scripts/build.ps1'
-            }
+
+        stage ('Restore con make'){
+            bat 'make restore'
         }
-        stage ('Test'){
-            steps {
-                powershell 'scripts/test.ps1'
-            }
-        }        
+
+        stage ('Build con make'){
+            bat 'make build'
+        }
+
+        stage ('test con make'){
+            bat 'make test'
+        }
+
     }
 }
