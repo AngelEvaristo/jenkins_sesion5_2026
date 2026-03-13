@@ -14,15 +14,23 @@ pipeline {
         }
 
         stage ('Restore con make'){
-            bat 'make restore'
+            steps {
+                bat 'make restore'
+            }
+            
         }
 
         stage ('Build con make'){
-            bat 'make build'
+            steps {
+                bat 'make build'
+            }
+            
         }
 
         stage ('test con make'){
-            bat 'make test'
+            steps {
+                bat 'make test'
+            }            
         }
 
     }
