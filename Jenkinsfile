@@ -22,16 +22,5 @@ pipeline {
             }            
         }
 
-    post {
-        always {
-            cleanWs()
-        }
-        success {
-            echo "Compilacion completada con exito."
-        }
-        failure {
-            echo "Error en compilacion"
-        }
     }
-}
 }
