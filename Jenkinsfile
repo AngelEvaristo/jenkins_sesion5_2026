@@ -1,4 +1,7 @@
 @Library('shared-lib@main') _
+
+import org.example.stringtools
+
 pipeline {
     agent any
     stages {
@@ -6,6 +9,9 @@ pipeline {
             steps{
                 script {
                     hello('dotnet')
+
+                    def tag = stringtools.tag(env.BRANCHE_NAME,env.BUILD_NUMBER)
+                    echo "Tag del build es {tag}"
                 }
             }
         }
