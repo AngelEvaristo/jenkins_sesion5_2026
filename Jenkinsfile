@@ -33,5 +33,12 @@ pipeline {
             }            
         }
 
+        stage ('Publish'){
+            steps {
+                bat 'make publish'
+                archiveArtifacts artifacts: 'published/**'
+            }
+        }
+
     }
 }
