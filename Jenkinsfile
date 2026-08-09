@@ -1,4 +1,4 @@
-@Library('shared-lib@main') _
+@Library('shared-lib-2026@main') _
 
 import org.example.stringtools
 
