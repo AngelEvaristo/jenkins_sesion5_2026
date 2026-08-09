@@ -6,26 +6,26 @@ pipeline {
     stages {
         stage('Restore') {
             steps {
-                dotnetRestore(solution: 'MyMinimapApi.sln')
+                dotnetRestore(solution: 'MyMinimalApi.sln')
             }
         }
 
         stage('Build') {
             steps {
-                dotnetBuild(solution: 'MyMinimapApi.sln')
+                dotnetBuild(solution: 'MyMinimalApi.sln')
             }
         }
 
         stage('Test') {
             steps {
-                dotnetTest(project: 'MyMinimapApi.Tests/MyMinimapApi.Tests.csproj')
+                dotnetTest(project: 'MyMinimalApi.Tests/MyMinimalApi.Tests.csproj')
             }
         }
 
         stage('Publish') {
             steps {
                 dotnetPublish(
-                    project: 'MyMinimapApi.Api/MyMinimapApi.Api.csproj',
+                    project: 'MyMinimalApi.Api/MyMinimalApi.Api.csproj',
                     output: 'publish'
                 )
 
