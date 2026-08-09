@@ -1,18 +1,35 @@
 @Library('shared-lib-2026@main') _
 
-import org.example.stringtools
-
 pipeline {
     agent any
-    stages {
-        stage('prueba'){
-            steps{
-                script {
-                    hello('dotnet')
 
-                    def tag = stringtools.tag(env.BRANCH_NAME,env.BUILD_NUMBER)
-                    echo "Tag del build es ${tag}"
-                }
+    stages {
+        stage('Restore') {
+            steps {
+                dotnetRestore(solution: 'MyMinimapApi.sln')
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dotnetBuild(solution: 'MyMinimapApi.sln')
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dotnetTest(project: 'MyMinimapApi.Tests/MyMinimapApi.Tests.csproj')
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                dotnetPublish(
+                    project: 'MyMinimapApi.Api/MyMinimapApi.Api.csproj',
+                    output: 'publish'
+                )
+
+                archiveArtifacts artifacts: 'publish/**', fingerprint: true
             }
         }
     }
